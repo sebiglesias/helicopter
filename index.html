@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Helicopter Model - University Project</title>
+    <title>3D Models Showcase - Helicopter & Pizza Car</title>
     <style>
         * {
             margin: 0;
@@ -41,6 +41,47 @@
             opacity: 0.9;
         }
 
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -72,40 +113,14 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
+            overflow: auto;
         }
 
-        .model-placeholder {
-            text-align: center;
-            color: #999;
-        }
-
-        .model-placeholder img {
+        .model-image {
             max-width: 90%;
             max-height: 450px;
             object-fit: contain;
             border-radius: 10px;
-        }
-
-        .upload-area {
-            padding: 40px 20px;
-            text-align: center;
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            margin: 0 20px 20px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #f9f9f9;
-        }
-
-        .upload-area:hover {
-            border-color: #764ba2;
-            background: #f0f0f0;
-        }
-
-        .upload-area i {
-            font-size: 2em;
-            margin-bottom: 10px;
         }
 
         .reference-section {
@@ -130,6 +145,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .reference-image img:hover {
@@ -143,46 +159,35 @@
             font-weight: 500;
         }
 
-        .info-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            color: #333;
-            animation: slideUp 0.8s ease-out;
-            animation-delay: 0.2s;
-            animation-fill-mode: both;
+        .carousel-nav {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
         }
 
-        .info-section h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.8em;
+        .carousel-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
         }
 
-        .info-section p {
-            line-height: 1.8;
-            margin-bottom: 15px;
-            color: #555;
+        .carousel-button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
         }
 
-        .info-list {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .info-list li {
-            padding: 10px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #555;
-        }
-
-        .info-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #667eea;
+        .carousel-button.active {
+            background: #764ba2;
             font-weight: bold;
         }
 
@@ -206,6 +211,17 @@
             }
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 1024px) {
             .content {
                 grid-template-columns: 1fr;
@@ -220,16 +236,6 @@
             }
         }
 
-        .instructions {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 20px;
-            border-radius: 5px;
-            font-size: 0.95em;
-            color: #444;
-        }
-
         footer {
             text-align: center;
             color: white;
@@ -242,124 +248,139 @@
 <body>
     <div class="container">
         <header>
-            <h1>🚁 3D Helicopter Model</h1>
-            <p class="subtitle">University Project - 3ds Max Modeling</p>
+            <h1>🎨 3D Models Showcase</h1>
+            <p class="subtitle">University Projects</p>
         </header>
 
-        <div class="content">
-            <div class="model-section">
-                <div class="section-header">3D Model</div>
-                <div class="model-viewer">
-                    <div class="model-placeholder">
-                        <div class="upload-area" onclick="document.getElementById('modelUpload').click()">
-                            <p>📤 Click to upload your 3D model</p>
-                            <p style="font-size: 0.9em; margin-top: 10px;">Supported: .gltf, .glb, .obj, .fbx</p>
-                            <input type="file" id="modelUpload" style="display: none;" accept=".gltf,.glb,.obj,.fbx,.png,.jpg,.jpeg">
-                        </div>
-                    </div>
-                </div>
-                <div class="instructions">
-                    💡 <strong>Tip:</strong> Export your 3ds Max model as GLTF or GLB format for web viewing. Consider using Babylon.js or Three.js for interactive 3D visualization.
-                </div>
-            </div>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('helicopter')">🚁 Helicopter</button>
+            <button class="tab-button" onclick="openTab('pizzacar')">🍕 Pizza Car</button>
+        </div>
 
-            <div class="reference-section">
-                <div class="section-header">Reference Images</div>
-                <div class="references-container">
-                    <div class="reference-image">
-                        <div class="upload-area" onclick="document.getElementById('refUpload').click()" style="margin: 0; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                            <p>📸 Click to upload reference images</p>
-                            <p style="font-size: 0.85em; margin-top: 5px;">Front view, side view, steps</p>
-                            <input type="file" id="refUpload" style="display: none;" accept="image/*" multiple>
+        <!-- HELICOPTER TAB -->
+        <div id="helicopter" class="tab-content active">
+            <div class="content">
+                <div class="model-section">
+                    <div class="section-header">3D Model</div>
+                    <div class="model-viewer" id="helicopterViewer">
+                        <img class="model-image" src="ISO.png" alt="Helicopter ISO View">
+                    </div>
+                    <div class="carousel-nav">
+                        <button class="carousel-button active" onclick="switchHelicopterView('ISO.png')">ISO</button>
+                        <button class="carousel-button" onclick="switchHelicopterView('Front.png')">Front</button>
+                        <button class="carousel-button" onclick="switchHelicopterView('Side_01.png')">Side</button>
+                        <button class="carousel-button" onclick="switchHelicopterView('Top.png')">Top</button>
+                    </div>
+                </div>
+
+                <div class="reference-section">
+                    <div class="section-header">Step-by-Step Process</div>
+                    <div class="references-container" id="helicopterSteps">
+                        <div class="reference-image">
+                            <img src="a.png" alt="Step A">
+                            <div class="reference-label">Step A</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="b.png" alt="Step B">
+                            <div class="reference-label">Step B</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="c.png" alt="Step C">
+                            <div class="reference-label">Step C</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="d1.png" alt="Step D1">
+                            <div class="reference-label">Step D1</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="d2.png" alt="Step D2">
+                            <div class="reference-label">Step D2</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="f.png" alt="Step F">
+                            <div class="reference-label">Step F</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="g.png" alt="Step G">
+                            <div class="reference-label">Step G</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="h.png" alt="Step H">
+                            <div class="reference-label">Step H</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="i.png" alt="Step I">
+                            <div class="reference-label">Step I</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="j.png" alt="Step J">
+                            <div class="reference-label">Step J</div>
+                        </div>
+                        <div class="reference-image">
+                            <img src="k.png" alt="Step K">
+                            <div class="reference-label">Step K</div>
                         </div>
                     </div>
-                    <div id="referencesGallery"></div>
                 </div>
             </div>
         </div>
 
-        <div class="info-section">
-            <h2>Project Overview</h2>
-            <p>
-                This is a comprehensive 3D helicopter model created as a university project using <strong>3ds Max</strong>. 
-                The project showcases the detailed modeling process from concept sketches and reference images to a fully rendered 3D model.
-            </p>
-            
-            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">Project Components</h3>
-            <ul class="info-list">
-                <li><strong>3D Model:</strong> Detailed helicopter mesh with all major components</li>
-                <li><strong>Reference Images:</strong> Front view and side view used as reference during modeling</li>
-                <li><strong>Step-by-Step Process:</strong> Images showing the modeling progression</li>
-                <li><strong>Materials & Textures:</strong> Professional rendering with realistic materials</li>
-            </ul>
-
-            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">How to Use This Page</h3>
-            <ul class="info-list">
-                <li>Upload your exported 3D model file (GLTF/GLB format recommended)</li>
-                <li>Add reference images used during the modeling process</li>
-                <li>View your project in an interactive web environment</li>
-                <li>Share your work with a beautiful, professional presentation</li>
-            </ul>
-
-            <p style="margin-top: 20px; font-style: italic; color: #999;">
-                💾 All files are stored locally in your browser. No data is sent to external servers.
-            </p>
+        <!-- PIZZA CAR TAB -->
+        <div id="pizzacar" class="tab-content">
+            <div class="content">
+                <div class="model-section" style="grid-column: 1 / -1;">
+                    <div class="section-header">🍕 Pizza Car - SketchUp Model</div>
+                    <div class="model-viewer">
+                        <div style="text-align: center; padding: 60px 40px; color: #999;">
+                            <p style="font-size: 2em; margin-bottom: 20px;">🍕</p>
+                            <p style="font-size: 1.3em; font-weight: 600; margin-bottom: 15px;">Pizza Car SketchUp Model</p>
+                            <p style="margin-bottom: 20px;">Available files:</p>
+                            <ul style="list-style: none; color: #666; font-size: 1.1em;">
+                                <li style="margin: 10px 0;">📄 <strong>PizzaCar.skp</strong></li>
+                                <li style="margin: 10px 0;">📄 <strong>PizzaCar.skb</strong></li>
+                            </ul>
+                            <p style="margin-top: 30px; font-size: 0.95em; color: #999;">
+                                Open these files with SketchUp for full 3D viewing and editing
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <footer>
-            <p>3D Helicopter Showcase | Created with HTML5 & Modern Web Technologies</p>
+            <p>3D Models Showcase | University Projects</p>
         </footer>
     </div>
 
     <script>
-        // Handle reference image uploads
-        document.getElementById('refUpload').addEventListener('change', function(e) {
-            const gallery = document.getElementById('referencesGallery');
-            gallery.innerHTML = '';
+        function openTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
             
-            Array.from(e.target.files).forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const div = document.createElement('div');
-                    div.className = 'reference-image';
-                    div.innerHTML = `
-                        <img src="${event.target.result}" alt="Reference ${index + 1}">
-                        <div class="reference-label">Reference Image ${index + 1}</div>
-                    `;
-                    gallery.appendChild(div);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
 
-        // Handle model upload
-        document.getElementById('modelUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const modelViewer = document.querySelector('.model-viewer');
-                    const placeholder = document.querySelector('.model-placeholder');
-                    
-                    if (file.type.includes('image')) {
-                        // If it's an image, display it
-                        placeholder.innerHTML = `<img src="${event.target.result}" alt="3D Model Preview">`;
-                    } else {
-                        // For 3D files, show a message about implementation
-                        placeholder.innerHTML = `
-                            <div>
-                                <p style="font-size: 1.1em; margin-bottom: 10px;">📦 3D Model Loaded: <strong>${file.name}</strong></p>
-                                <p style="font-size: 0.9em; color: #666;">
-                                    To view this model interactively, integrate a 3D viewer library like:<br>
-                                    <strong>Three.js</strong>, <strong>Babylon.js</strong>, or <strong>Model Viewer</strong>
-                                </p>
-                            </div>
-                        `;
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        function switchHelicopterView(imageName) {
+            const viewer = document.getElementById('helicopterViewer');
+            const img = viewer.querySelector('.model-image');
+            
+            img.src = imageName;
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.carousel-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
     </script>
 </body>
 </html>
